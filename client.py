@@ -3,18 +3,16 @@ import socket
 import pickle
 import struct
 
-# Create socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host_ip = '127.0.1.1'  # Replace with the actual IP address of the server
+host_ip = '192.168.180.17'  
 port = 1234
 client_socket.connect((host_ip, port))
 data = b""
 payload_size = struct.calcsize("Q")
 
-# Loop to receive and display video frames
 while True:
     while len(data) < payload_size:
-        packet = client_socket.recv(4*1024)  # 4K buffer size
+        packet = client_socket.recv(4*1024) 
         if not packet:
             break
         data += packet
@@ -32,6 +30,5 @@ while True:
     if key == ord('q'):
         break
 
-# Cleanup
 cv2.destroyAllWindows()
 client_socket.close()
